@@ -1,14 +1,50 @@
-// jag vill hämta 12 konstverk från Art Institute of Chicago
-// jag behöver id, titel, konstnär och bild-id för varje verk
-// funktionen ska returnera listan så jag kan rita ut den sen
+// jag vill hämta konstverk från Metropolitan Museum of Art
+// listan ger bara id-nummer, jag måste hämta varje verk för sig
+// jag vill ha 12 verk som har bild
 
-const API_URL = "https://api.artic.edu/api/v1/artworks"
-const FALT = "id,title,artist_title,image_id"
+const API_URL = "https://collectionapi.metmuseum.org/public/collection/v1"
 
-async function hamtaKonstverk() {
-  const svar = await fetch(`${API_URL}?limit=12&fields=${FALT}`)
+async function hamtaIdn() {
+  const svar = await fetch(`${API_URL}/objects?departmentIds=11`)
   const data = await svar.json()
-  return data.data
+  return data.objectIDs
 }
 
-hamtaKonstverk().then(console.log)
+async function hamtaVerk(id) {
+  const svar = await fetch(`${API_URL}/objects/${id}`)
+  return await svar.json()
+}
+
+// jag vill plocka de första verken som har en bild
+// jag hämtar fler än jag behöver eftersom några saknar bild
+
+async function hamtaKonstverk() {
+  const idn = await hamtaIdn()
+  const forsta = idn.slice(0, 40)
+  const alla = await Promise.all(forsta.map(hamtaVerk))
+  return alla.filter(verk => verk.primaryImageSmall).slice(0, 12)
+}
+
+// jag vill rita ut varje konstverk som ett kort med bild, titel och konstnär
+// hela kortet ska vara en länk till detaljsidan med verkets id i adressen
+
+function ritaKort(konstverk) {
+  const lista = document.getElementById("lista")
+
+  lista.innerHTML = konstverk.map(verk => `
+    <a class="kort" href="detalj.html?id=${verk.objectID}">
+      <img src="${verk.primaryImageSmall}" alt="${verk.title}">
+      <h2>${verk.title}</h2>
+      <p>${verk.artistDisplayName || "Okänd konstnär"}</p>
+    </a>
+  `).join("")
+}
+
+// jag vill starta sidan genom att hämta datan och sen rita ut den
+
+async function start() {
+  const konstverk = await hamtaKonstverk()
+  ritaKort(konstverk)
+}
+
+start()
