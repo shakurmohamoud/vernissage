@@ -1,6 +1,7 @@
 // jag vill hämta konstverk från Metropolitan Museum of Art
 // listan ger bara id-nummer, jag måste hämta varje verk för sig
 // jag vill ha 12 verk som har bild
+// jag vill visa att sidan laddar medan verken hämtas
 
 const API_URL = "https://collectionapi.metmuseum.org/public/collection/v1"
 
@@ -40,11 +41,22 @@ function ritaKort(konstverk) {
   `).join("")
 }
 
+function visaMeddelande(text) {
+  const lista = document.getElementById("lista")
+  lista.innerHTML = `<p class="meddelande">${text}</p>`
+}
+
 // jag vill starta sidan genom att hämta datan och sen rita ut den
 
 async function start() {
-  const konstverk = await hamtaKonstverk()
-  ritaKort(konstverk)
+  visaMeddelande("Hämtar konstverk…")
+
+  try {
+    const konstverk = await hamtaKonstverk()
+    ritaKort(konstverk)
+  } catch {
+    visaMeddelande("Det gick inte att hämta samlingen. Försök igen om en stund.")
+  }
 }
 
 start()
