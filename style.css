@@ -1,0 +1,167 @@
+/* färger och typsnitt för hela sidan */
+:root {
+  --bakgrund: #0f1613;
+  --text: #e8e6e0;
+  --accent: #a8926b;
+  --dampad: #8a8a82;
+  --ram: #26302b;
+  --rubrik: "Cormorant Garamond", serif;
+  --brod: "Inter", sans-serif;
+}
+
+/* nollställ marginaler och räkna in padding i bredden */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bakgrund);
+  color: var(--text);
+  font-family: var(--brod);
+  line-height: 1.6;
+}
+
+/* toppen på sidan */
+.toppen {
+  padding: 4rem 2rem 3rem;
+  text-align: center;
+  border-bottom: 1px solid var(--ram);
+}
+
+.toppen h1 {
+  font-family: var(--rubrik);
+  font-size: 4rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+.ingress {
+  color: var(--accent);
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+}
+
+/* rutnätet med korten */
+.rutnat {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 3rem 2rem;
+}
+
+/* varje kort är en länk */
+.kort {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.kort img {
+  width: 100%;
+  height: 320px;
+  object-fit: contain;
+  background: #0a0f0d;
+  border: 1px solid var(--ram);
+  transition: border-color 0.3s;
+}
+
+.kort:hover img {
+  border-color: var(--accent);
+}
+
+.kort h2 {
+  font-family: var(--rubrik);
+  font-size: 1.4rem;
+  font-weight: 400;
+  margin-top: 1rem;
+  line-height: 1.3;
+}
+
+.kort p {
+  color: var(--accent);
+  font-size: 0.85rem;
+  margin-top: 0.2rem;
+}
+
+/* detaljsidan */
+.tillbaka {
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+}
+
+.tillbaka:hover {
+  color: var(--text);
+}
+
+.toppen:has(.tillbaka) {
+  text-align: left;
+  padding: 2rem;
+}
+
+.storbild {
+  width: 100%;
+  max-height: 70vh;
+  object-fit: contain;
+  display: block;
+  margin-bottom: 2.5rem;
+}
+
+#verk h1 {
+  font-family: var(--rubrik);
+  font-size: 2.8rem;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.konstnar {
+  color: var(--accent);
+  font-size: 1rem;
+  margin-top: 0.5rem;
+}
+
+/* faktalistan med år, teknik och mått */
+.fakta {
+  margin-top: 2.5rem;
+  border-top: 1px solid var(--ram);
+  padding-top: 1.5rem;
+}
+
+.fakta dt {
+  color: var(--dampad);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 1.2rem;
+}
+
+.fakta dd {
+  font-size: 0.95rem;
+  margin-top: 0.3rem;
+}
+
+/* meddelanden när sidan laddar eller något går fel */
+.meddelande,
+.fel {
+  color: var(--accent);
+  text-align: center;
+  padding: 4rem 0;
+  font-size: 0.95rem;
+}
+
+/* sidfoten */
+.botten {
+  border-top: 1px solid var(--ram);
+  padding: 2rem;
+  text-align: center;
+  color: var(--dampad);
+  font-size: 0.8rem;
+}
