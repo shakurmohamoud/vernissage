@@ -175,3 +175,26 @@ main {
   color: var(--dampad);
   font-size: 0.8rem;
 }
+
+/* mobil: mindre luft och ingen fast titelhöjd när korten ligger i en kolumn */
+@media (max-width: 600px) {
+  .toppen {
+    padding: 2.5rem 1.25rem 2rem;
+  }
+
+  .toppen h1 {
+    font-size: 3rem;
+  }
+
+  main {
+    padding: 2rem 1.25rem;
+  }
+
+  .kort h2 {
+    min-height: 0;
+  }
+
+  #verk h1 {
+    font-size: 2.2rem;
+  }
+}
