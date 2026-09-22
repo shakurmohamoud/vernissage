@@ -1,42 +1,27 @@
-// jag vill hämta konstverk från Metropolitan Museum of Art
-// listan ger bara id-nummer, jag måste hämta varje verk för sig
-// jag vill ha 12 verk som har bild
+// jag vill hämta konstverk från Cleveland Museum of Art
+// jag vill ha 12 målningar som har bild
+// allt kommer i ett anrop, så jag behöver inte hämta varje verk för sig
 // jag vill visa att sidan laddar medan verken hämtas
 
-const API_URL = "https://collectionapi.metmuseum.org/public/collection/v1"
-
-async function hamtaIdn() {
-  const svar = await fetch(`${API_URL}/objects?departmentIds=11`)
-  const data = await svar.json()
-  return data.objectIDs
-}
-
-async function hamtaVerk(id) {
-  const svar = await fetch(`${API_URL}/objects/${id}`)
-  return await svar.json()
-}
-
-// jag vill plocka de första verken som har en bild
-// jag hämtar fler än jag behöver eftersom några saknar bild
+const API_URL = "https://openaccess-api.clevelandart.org/api/artworks"
 
 async function hamtaKonstverk() {
-  const idn = await hamtaIdn()
-  const forsta = idn.slice(0, 40)
-  const alla = await Promise.all(forsta.map(hamtaVerk))
-  return alla.filter(verk => verk.primaryImageSmall).slice(0, 12)
+  const svar = await fetch(`${API_URL}?limit=12&has_image=1&type=Painting`)
+  const data = await svar.json()
+  return data.data
 }
 
 // jag vill rita ut varje konstverk som ett kort med bild, titel och konstnär
-// hela kortet ska vara en länk till detaljsidan med verkets id i adressen
+// hela kortet ska vara en länk till detaljsidan med verkets nummer i adressen
 
 function ritaKort(konstverk) {
   const lista = document.getElementById("lista")
 
   lista.innerHTML = konstverk.map(verk => `
-    <a class="kort" href="detalj.html?id=${verk.objectID}">
-      <img src="${verk.primaryImageSmall}" alt="${verk.title}">
+    <a class="kort" href="detalj.html?id=${verk.accession_number}">
+      <img src="${verk.images.web.url}" alt="${verk.title}">
       <h2>${verk.title}</h2>
-      <p>${verk.artistDisplayName || "Okänd konstnär"}</p>
+      <p>${verk.creators[0]?.description || "Okänd konstnär"}</p>
     </a>
   `).join("")
 }

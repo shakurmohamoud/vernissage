@@ -1,10 +1,10 @@
-// jag vill läsa ut id-numret från adressfältet
-// sen hämtar jag verket från Metropolitan Museum of Art
+// jag vill läsa ut verkets nummer från adressfältet
+// sen hämtar jag verket från Cleveland Museum of Art
 // jag vill visa bild, titel, konstnär, år, teknik och mått
 // jag vill visa ett tydligt meddelande om något går fel
-// det gäller om id saknas i adressen eller om verket inte finns
+// det gäller om numret saknas i adressen eller om verket inte finns
 
-const API_URL = "https://collectionapi.metmuseum.org/public/collection/v1"
+const API_URL = "https://openaccess-api.clevelandart.org/api/artworks"
 
 function hamtaId() {
   const adress = new URLSearchParams(window.location.search)
@@ -12,13 +12,19 @@ function hamtaId() {
 }
 
 async function hamtaVerk(id) {
-  const svar = await fetch(`${API_URL}/objects/${id}`)
+  const svar = await fetch(`${API_URL}?accession_number=${id}`)
 
   if (!svar.ok) {
     throw new Error("Verket kunde inte hämtas")
   }
 
-  return await svar.json()
+  const data = await svar.json()
+
+  if (data.data.length === 0) {
+    throw new Error("Verket finns inte")
+  }
+
+  return data.data[0]
 }
 
 // jag vill rita ut verket med bilden först och fakta under
@@ -27,16 +33,16 @@ function ritaVerk(verk) {
   const ruta = document.getElementById("verk")
 
   ruta.innerHTML = `
-    <img class="storbild" src="${verk.primaryImageSmall}" alt="${verk.title}">
+    <img class="storbild" src="${verk.images.web.url}" alt="${verk.title}">
     <h1>${verk.title}</h1>
-    <p class="konstnar">${verk.artistDisplayName || "Okänd konstnär"}</p>
+    <p class="konstnar">${verk.creators[0]?.description || "Okänd konstnär"}</p>
     <dl class="fakta">
       <dt>År</dt>
-      <dd>${verk.objectDate || "Okänt"}</dd>
+      <dd>${verk.creation_date || "Okänt"}</dd>
       <dt>Teknik</dt>
-      <dd>${verk.medium || "Okänd"}</dd>
+      <dd>${verk.technique || "Okänd"}</dd>
       <dt>Mått</dt>
-      <dd>${verk.dimensions || "Okända"}</dd>
+      <dd>${verk.measurements || "Okända"}</dd>
     </dl>
   `
 }
