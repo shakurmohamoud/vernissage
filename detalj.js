@@ -27,13 +27,20 @@ async function hamtaVerk(id) {
   return data.data[0]
 }
 
+// jag vill göra texten säker innan den läggs in i html
+// annars kan citattecken i en titel förstöra koden
+
+function gorSaker(text) {
+  return text.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;")
+}
+
 // jag vill rita ut verket med bilden först och fakta under
 
 function ritaVerk(verk) {
   const ruta = document.getElementById("verk")
 
   ruta.innerHTML = `
-    <img class="storbild" src="${verk.images.web.url}" alt="${verk.title}">
+    <img class="storbild" src="${verk.images.web.url}" alt="${gorSaker(verk.title)}">
     <h1>${verk.title}</h1>
     <p class="konstnar">${verk.creators[0]?.description || "Okänd konstnär"}</p>
     <dl class="fakta">
