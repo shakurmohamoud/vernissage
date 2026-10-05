@@ -1,25 +1,25 @@
 # Vernissage
 
-Konstverk från samlingen på Metropolitan Museum of Art
+Konstverk från samlingen på Cleveland Museum of Art
 
-Inlämningsuppgift i kursen JavaScript, HTML och CSS - FSU25D, Medieinstitutet
+Inlämningsuppgift i kursen JavaScript, HTML och CSS — FSU25D, Medieinstitutet
 
 ## Om sidan
 
-Startsidan visar tolv konstverk från museets samling av europeiskt måleri. Klickar man på ett verk kommer man till en detaljsida med större bild och fakta om verket
+Startsidan visar tolv målningar från museets samling. Klickar man på ett verk kommer man till en detaljsida med större bild och fakta om verket
 
 ## Teknik
 
 - Ren JavaScript, inga ramverk
 - Fetch API för alla anrop
-- Metropolitan Museum of Art Collection API
+- Cleveland Museum of Art Open Access API
 
 ## Så här hämtas datan
 
-Sidan gör två anrop som slås ihop:
+Sidan gör två anrop som hänger ihop:
 
-1. Startsidan hämtar en lista med id-nummer och sen varje verk för sig
-2. Detaljsidan läser verkets id från adressfältet och hämtar det verket
+1. Startsidan hämtar tolv målningar i ett anrop
+2. Detaljsidan läser verkets nummer från adressfältet och hämtar just det verket
 
 ## Köra sidan lokalt
 
