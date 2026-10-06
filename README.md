@@ -2,7 +2,7 @@
 
 Konstverk från samlingen på Cleveland Museum of Art
 
-Inlämningsuppgift i kursen JavaScript, HTML och CSS — FSU25D, Medieinstitutet
+Inlämningsuppgift i kursen JavaScript, HTML och CSS — FSU25D. Medieinstitutet
 
 ## Om sidan
 
@@ -14,12 +14,18 @@ Startsidan visar tolv målningar från museets samling. Klickar man på ett verk
 - Fetch API för alla anrop
 - Cleveland Museum of Art Open Access API
 
+## Om valet av API
+
+Jag testade först Art Institute of Chicago och sen Metropolitan Museum of Art. Båda finns på listan över Public APIs men ingen av dem fungerade. Art Institute stoppade alla bilder och Met stängde av mig efter några omladdningar
+
+Cleveland Museum of Art finns inte på listan men är ett öppet museiAPI precis som de andra. Det behöver ingen nyckel, stoppar inget och ger hela verket i ett anrop
+
 ## Så här hämtas datan
 
-Sidan gör två anrop som hänger ihop:
+Sidan gör två anrop som slås ihop:
 
 1. Startsidan hämtar tolv målningar i ett anrop
-2. Detaljsidan läser verkets nummer från adressfältet och hämtar just det verket
+2. Detaljsidan läser verkets nummer från adressfältet och hämtar det verket
 
 ## Köra sidan lokalt
 
