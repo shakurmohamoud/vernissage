@@ -1,7 +1,7 @@
 // jag vill läsa ut verkets nummer från adressfältet
 // sen hämtar jag verket från Cleveland Museum of Art
 // jag vill visa bild, titel, konstnär, år, teknik och mått
-// jag vill visa ett tydligt meddelande om något går fel
+// jag vill visa ett meddelande om något går fel
 // det gäller om numret saknas i adressen eller om verket inte finns
 
 const API_URL = "https://openaccess-api.clevelandart.org/api/artworks"
@@ -41,18 +41,21 @@ function ritaVerk(verk) {
 
   ruta.innerHTML = `
     <img class="storbild" src="${verk.images.web.url}" alt="${gorSaker(verk.title)}">
-    <h1>${verk.title}</h1>
-    <p class="konstnar">${verk.creators[0]?.description || "Okänd konstnär"}</p>
+    <h1>${gorSaker(verk.title)}</h1>
+    <p class="konstnar">${gorSaker(verk.creators[0]?.description || "Okänd konstnär")}</p>
     <dl class="fakta">
       <dt>År</dt>
-      <dd>${verk.creation_date || "Okänt"}</dd>
+      <dd>${gorSaker(verk.creation_date || "Okänt")}</dd>
       <dt>Teknik</dt>
-      <dd>${verk.technique || "Okänd"}</dd>
+      <dd>${gorSaker(verk.technique || "Okänd")}</dd>
       <dt>Mått</dt>
-      <dd>${verk.measurements || "Okända"}</dd>
+      <dd>${gorSaker(verk.measurements || "Okända")}</dd>
     </dl>
   `
 }
+
+// jag vill visa en text i stället för verket
+// det används när numret saknas eller när något går fel
 
 function visaFel(text) {
   const ruta = document.getElementById("verk")

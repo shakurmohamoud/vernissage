@@ -27,11 +27,14 @@ function ritaKort(konstverk) {
   lista.innerHTML = konstverk.map(verk => `
     <a class="kort" href="detalj.html?id=${verk.accession_number}">
       <img src="${verk.images.web.url}" alt="${gorSaker(verk.title)}">
-      <h2>${verk.title}</h2>
-      <p>${verk.creators[0]?.description || "Okänd konstnär"}</p>
+      <h2>${gorSaker(verk.title)}</h2>
+      <p>${gorSaker(verk.creators[0]?.description || "Okänd konstnär")}</p>
     </a>
   `).join("")
 }
+
+// jag vill visa en text i stället för korten
+// det används både när sidan laddar och när något går fel
 
 function visaMeddelande(text) {
   const lista = document.getElementById("lista")
